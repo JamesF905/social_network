@@ -38,14 +38,16 @@ module.exports = {
   updateUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .then((user) =>
+        Thought.updateMany(
+          { username: user.username },
+          { $set: { username : req.body.username } },
+        )        
+      )
+      .then(() =>
         User.findOneAndUpdate(
           { _id: req.params.userId },
           { $set: req.body },
           { runValidators: true, new: true }
-        ),
-        Thought.updateMany(
-          { _id: req.params.userId },
-          { $set: { username : user.username } },
         )
       )
       .then((user) =>
