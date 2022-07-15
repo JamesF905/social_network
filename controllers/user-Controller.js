@@ -7,7 +7,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   getSingleUser(req, res) {
-    User.findOne({ _id: req.params.postId })
+    User.findOne({ _id: req.params.userId })
       .then((user) =>
         !user
           ? res.status(404).json({ message: 'No user with that ID' })
@@ -26,10 +26,12 @@ module.exports = {
     User.findOneAndDelete({ _id: req.params.userId })
       .then((user) =>
         !user
-          ? res.status(404).json({ message: 'No user with that ID' })
-          : Thought.deleteMany({ _id: { $in: user.thoughts } })
+          ? json({ message: 'User Deleted' })
+          : res.status(404).json({ message: 'User still exists' })
+          /*? res.status(404).json({ message: 'No user with that ID' })
+          : Thought.deleteMany({ _id: { $in: user.thoughts } })*/
       )
-      .then(() => res.json({ message: 'User and thoughts deleted!' }))
+      // .then(() => res.json({ message: 'User and thoughts deleted!' }))
       .catch((err) => res.status(500).json(err));
   },
   // Update a user
@@ -60,6 +62,13 @@ module.exports = {
     )
     .catch((err) => res.status(500).json(err));
   },
+  //get All FRIENDs
+  /*
+  getFriends(req, res) {
+    User.friends.find()
+      .then((user) => res.json(user))
+      .catch((err) => res.status(500).json(err));
+  },*/
   //delete A FRIEND
   removeFriend(req, res) {
     User.findOneAndUpdate(
