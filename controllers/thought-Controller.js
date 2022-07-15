@@ -1,4 +1,4 @@
-const { Thought, User } = require('../models');
+const { Thought, User, Reaction } = require('../models');
 const userController = require('./user-Controller');
 
 module.exports = {
@@ -63,5 +63,16 @@ module.exports = {
       )
       .then(() => res.json({ message: 'thought and user deleted!' }))
       .catch((err) => res.status(500).json(err));
+  },
+  createReaction(req, res) {
+    Reaction.create(req.body)      
+      .then((react) => res.json(react))
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).json(err);
+      });
+  },
+  deleteReaction(req, res) {
+    
   },
 };

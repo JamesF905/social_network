@@ -34,11 +34,5 @@ const userSchema = new Schema(
         return this.friends.length
     });
     
-    /*userSchema.pre('findOneAndDelete', { document: false, query: true }, async function() {
-        const doc = await this.model.findOne(this.getFilter());
-        console.log(doc.username);
-        await Thought.deleteMany({ username: doc.username });
-    });*/
-    
     const User = model('User', userSchema);
     module.exports = User;
