@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { Thought, User } = require('../models');
 
 module.exports = {
   getUser(req, res) {
@@ -36,17 +36,24 @@ module.exports = {
   },
   // Update a user
   updateUser(req, res) {
-    User.findOneAndUpdate(
-      { _id: req.params.userId },
-      { $set: req.body },
-      { runValidators: true, new: true }
-    )
+    User.findOne({ _id: req.params.userId })
+      .then((user) =>
+        User.findOneAndUpdate(
+          { _id: req.params.userId },
+          { $set: req.body },
+          { runValidators: true, new: true }
+        ),
+        Thought.updateMany(
+          { _id: req.params.userId },
+          { $set: { username : user.username } },
+        )
+      )
       .then((user) =>
         !user
           ? res.status(404).json({ message: 'No user with this id!' })
           : res.json(user)
       )
-      .catch((err) => res.status(500).json(err));
+    .catch((err) => res.status(500).json(err));
   },
   //ADDS A FRIEND
   addFriend(req, res) {
