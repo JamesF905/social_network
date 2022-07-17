@@ -60,10 +60,13 @@ module.exports = {
             { new: true }
             )
       )
-      .then(() => res.json({ message: 'thought and user deleted!' }))
+      .then(() => res.json({ message: 'thought deleted!' }))
       .catch((err) => res.status(500).json(err));
   },
   createReaction(req, res) {
+    /*Reaction.create(req.body)
+    .then(() => res.json({ message: 'reaction created' }))
+    .catch((err) => res.status(500).json(err));*/
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $addToSet: { reactions: req.body } },
@@ -79,17 +82,22 @@ module.exports = {
 
     
   deleteReaction(req, res) {
-    Reaction.findOneAndDelete({ _id: req.params.reactionId })
-      .then((reaction) =>
-        !thought
-          ? res.status(404).json({ message: 'No thought with that ID' })
-          : User.findOneAndUpdate(
-            { thoughts: req.params.thoughtId },
-            { $pull: { thoughts: req.params.thoughtId } },
+    //Reaction.findOneAndDelete({ _id: req.params.reactionId })
+      /*.then((reaction) =>
+        !reaction
+          ? res.status(404).json({ message: 'No reaction with that ID' })
+          : Thought.findOneAndUpdate(
+            { reactions: req.params.reactionId },
+            { $pull: { reactions: req.params.reactionId } },
             { new: true }
             )
-      )       
-      .then(() => res.json({ message: 'thought and user deleted!' }))
+      )*/
+      Thought.findOneAndUpdate(
+        {  _id: req.params.thoughtId  },
+        { $pull: { reactions: {reactionId: req.params.reactionId} } },
+        { new: true }
+      )
+      .then(() => res.json({ message: 'reaction deleted!' }))
       .catch((err) => res.status(500).json(err));
-  },
+  }
 };
