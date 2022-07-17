@@ -1,11 +1,11 @@
 const { Schema, model } = require('mongoose');
+const { ObjectId } = require('mongoose').Types;
 
 //REACTIONS ON POSTS BY USERS
 const reactionSchema = new Schema({
     reactionId: {
         type: Schema.Types.ObjectId,
-        default: () => new Schema.Types.ObjectId(),
-        primary: true
+        default: new ObjectId()
     },
     reactionBody: {
         type: String,
@@ -46,7 +46,8 @@ const thoughtSchema = new Schema(
     },
     {
         toJSON: {
-            virtuals: true
+            virtuals: true,
+            versionKey: false
         },
         id: false
     });

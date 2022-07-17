@@ -1,5 +1,4 @@
 const { Thought, User, Reaction } = require('../models');
-const userController = require('./user-Controller');
 
 module.exports = {
   // Get all thoughts
@@ -65,13 +64,20 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   createReaction(req, res) {
-    Reaction.create(req.body)      
-      .then((react) => res.json(react))
-      .catch((err) => {
-        console.log(err);
-        return res.status(500).json(err);
-      });
+    Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { $addToSet: { reactions: req.body } },
+      { runValidators: true, new: true }
+    )
+    .then((thought) =>
+      !thought
+        ? res.status(404).json({ message: 'No thought with this id!' })
+        : res.json(thought)
+    )
+    .catch((err) => res.status(500).json(err));
   },
+
+    
   deleteReaction(req, res) {
 
   },
