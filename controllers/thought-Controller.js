@@ -1,4 +1,4 @@
-const { Thought, User, Reaction } = require('../models');
+const { Thought, User} = require('../models');
 
 module.exports = {
   // Get all thoughts
@@ -97,7 +97,7 @@ module.exports = {
         { $pull: { reactions: {reactionId: req.params.reactionId} } },
         { new: true }
       )
-      .then(() => res.json({ message: 'reaction deleted!' }))
+      .then((thought) => res.json(thought.reactions))
       .catch((err) => res.status(500).json(err));
   }
 };

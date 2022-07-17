@@ -1,11 +1,10 @@
-const { Schema, model } = require('mongoose');
-const { ObjectId } = require('mongoose').Types;
+const { Schema, model, Types } = require('mongoose');
 
 //REACTIONS ON POSTS BY USERS
 const reactionSchema = new Schema({
     reactionId: {
         type: Schema.Types.ObjectId,
-        default: new ObjectId()
+        default: () => new Types.ObjectId()
     },
     reactionBody: {
         type: String,
@@ -56,5 +55,4 @@ const thoughtSchema = new Schema(
     });
     
     const Thought = model('Thought', thoughtSchema);
-    const Reaction = model('Reaction', reactionSchema);
-    module.exports = { Thought, Reaction };
+    module.exports = Thought;
