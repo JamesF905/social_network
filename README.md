@@ -2,7 +2,7 @@
 <div id="top"></div>
 <div align="center">
 <a href="https://gist.github.com/JamesF905">
-<img src="assets/images/logo.png" alt="Logo" width="80%" style="border: 4px inset #444; background:#333; border-radius: 20px">
+<img src="assets/images/logo.png" alt="Logo" width="40%" style="border: 4px inset #444; background:#333; border-radius: 20px">
 </a>
 
 # Social Network
