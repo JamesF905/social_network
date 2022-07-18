@@ -1,7 +1,7 @@
 //Import schema and model from mongoose
 const { Schema, model, Types } = require('mongoose');
 // import the moment.js plugin
-const moment_plugin = require("moment");
+const moment = require("moment");
 
 //Create the reactions Schema
 const reactionSchema = new Schema({
@@ -22,7 +22,7 @@ const reactionSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        get: (createdAt) => moment_plugin(createdAt).format('MMM Do, YYYY [at] hh:mm a') // use moment to adjust the timestamp
+        get: (createdAtVal) => moment(createdAtVal).format('MMM Do, YYYY [at] hh:mm a') // use moment to adjust the timestamp
     }
 });
 
@@ -38,7 +38,7 @@ const thoughtSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now(),
-            get: (createdAt) => moment_plugin(createdAt).format('MMM Do, YYYY [at] hh:mm a') // use moment to adjust the timestamp
+            get: (createdAtVal) => moment(createdAtVal).format('MMM Do, YYYY [at] hh:mm a') // use moment to adjust the timestamp
         },
         username: {
             type: String, 
