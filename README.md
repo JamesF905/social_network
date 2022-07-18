@@ -73,7 +73,7 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
 A special thanks to my study group partner.
 
 <p align="left">
-    <a href="https://github.com/mariyasetko"><strong>mariyasetko</strong></a>
+    <a href="https://github.com/mariyasetko"><strong>Mariya Setko</strong></a>
 </p>
 <br/><br/>
 
