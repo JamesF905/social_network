@@ -38,6 +38,7 @@ This challenge requires me to create a social network app using node.js, npm, mo
 * [Acceptance Criteria](#Acceptance-Criteria)
 * [Collaborators](#Collaborators)
 * [Technology Used](#Technology-Used)
+* [Installation](#Installation-Instructions)
 * [About the Author](#About-the-Author)
 <br/><br/>
 
@@ -90,6 +91,29 @@ A special thanks to my study group partner.
 * [node.js](https://nodejs.org/en/)
 * [npm](https://www.npmjs.com/)
 * [nodemon](https://www.npmjs.com/package/nodemon)
+
+<p align="center"><a href="#contents">(back to top)</a></p>
+<br/><br/>
+
+## Installation Instructions 
+
+1) Install GitBash
+
+2) Install Node.js
+
+3) Install MongoDB
+
+4) Install Insomnia
+
+5) Clone this repot
+
+6) Run GitBash from your cloned folder
+
+7) type "npm i" in GitBash
+
+8) type "npm run dev" in GitBash
+
+9) Use Insomnia to play with the routes and functionality
 
 <p align="center"><a href="#contents">(back to top)</a></p>
 <br/><br/>
