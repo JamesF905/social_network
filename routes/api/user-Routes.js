@@ -1,4 +1,6 @@
+// include the router
 const router = require('express').Router();
+// get methods from the controller to use in the routes connected to the user controller 
 const {
   getUser,
   getSingleUser,
@@ -6,23 +8,18 @@ const {
   deleteUser,
   updateUser,
   addFriend,
-  removeFriend //,
-  //getFriends
+  removeFriend
 
 } = require('../../controllers/user-Controller');
 
-// /api/user
+//set the user route to get all users and create users
 router.route('/').get(getUser).post(createUser);
-
-// /api/user/:userId
+//set the user route to get a single user, update a user, or delete a user by id
 router.route('/:userId').get(getSingleUser).put(updateUser).delete(deleteUser);
-
-//router.route('/:userId/friends/').get(getFriends).delete(removeFriend);
-
+//set the user route to add and remove friends
 router.route('/:userId/friends/:friendId').post(addFriend).delete(removeFriend);
 
-// router.route('/:friendId').put(addFriend).delete(removeFriend);
-
+// export the user routes to the router
 module.exports = router;
 
 

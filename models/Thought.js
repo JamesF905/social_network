@@ -1,6 +1,9 @@
+//Import schema and model from mongoose
 const { Schema, model, Types } = require('mongoose');
+// import the moment.js plugin
+const moment_plugin = require("moment");
 
-//REACTIONS ON POSTS BY USERS
+//Create the reactions Schema
 const reactionSchema = new Schema({
     reactionId: {
         type: Schema.Types.ObjectId,
@@ -19,11 +22,11 @@ const reactionSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        get: time => dateFormat(time)
+        get: (createdAtVal) => moment_plugin(createdAtVal).format('MMM DD, YYYY [at] hh:mm a') // use moment to adjust the timestamp
     }
 });
 
-//USER POSTS
+//Create the thoughts Schema
 const thoughtSchema = new Schema(
     {
         thoughtText: {
@@ -35,24 +38,26 @@ const thoughtSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now(),
-            get: time => dateFormat(time)
+            get: (createdAtVal) => moment_plugin(createdAtVal).format('MMM DD, YYYY [at] hh:mm a') // use moment to adjust the timestamp
         },
         username: {
             type: String, 
             required: true
         },
-        reactions: [reactionSchema]
+        reactions: [reactionSchema] //include the reaction schema into this section of the thoughts schema
     },
     {
         toJSON: {
-            virtuals: true,
-            versionKey: false
+            virtuals: true, // allow virtuals
+            versionKey: false // remove unwanted keys 
         },
         id: false
     });
+    //make the virtual that shows the total reactions 
     thoughtSchema.virtual('reactionCount').get(function() {
         return this.reactions.length;
     });
     
+    //set and export the Thought model
     const Thought = model('Thought', thoughtSchema);
     module.exports = Thought;

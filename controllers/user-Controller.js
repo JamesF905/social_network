@@ -1,11 +1,15 @@
+// Import the thought and user models from models/index.js 
 const { Thought, User } = require('../models');
 
+//Start exporting the promises/methods to be used in the user routes
 module.exports = {
+  //This gets all the users
   getUser(req, res) {
     User.find()
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
+  //This a single users
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .then((user) =>
@@ -15,13 +19,13 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // create a new post
+  //This creates a users
   createUser(req, res) {
     User.create(req.body)
       .then((dbPostData) => res.json(dbPostData))
       .catch((err) => res.status(500).json(err));
   },  
-  // Delete a user
+  //This deletes a user, and then deletes their thoughts
   deleteUser(req, res) {
     User.findOne({ _id: req.params.userId })
     .then((user) =>
@@ -32,16 +36,11 @@ module.exports = {
     )    
     .then((user) =>
     res.json(user)
-        /*!user
-          ? json({ message: 'User Deleted' })
-          : res.status(404).json({ message: 'User still exists' })
-          ? res.status(404).json({ message: 'No user with that ID' })
-          : Thought.deleteMany({ _id: { $in: user.thoughts } })*/
     )
-      // .then(() => res.json({ message: 'User and thoughts deleted!' }))
     .catch((err) => res.status(500).json(err));
   },
-  // Update a user
+  //This will update a users information such as username, and email
+  //When the username is changes it also changes it in their thoughts
   updateUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .then((user) =>
@@ -50,6 +49,7 @@ module.exports = {
           { $set: { username : req.body.username } },
         )        
       )
+      //Update thoughts so that the username shows the new/current username 
       .then(() =>
         User.findOneAndUpdate(
           { _id: req.params.userId },
@@ -57,6 +57,7 @@ module.exports = {
           { runValidators: true, new: true }
         )
       )
+      //if the user doesnt exist return an error, otherwise return the updated user document
       .then((user) =>
         !user
           ? res.status(404).json({ message: 'No user with this id!' })
@@ -64,13 +65,14 @@ module.exports = {
       )
     .catch((err) => res.status(500).json(err));
   },
-  //ADDS A FRIEND
+  //This section adds friends via post, based on which ids are in the url
   addFriend(req, res) {
   User.findOneAndUpdate(
     { _id: req.params.userId },
     { $push: { friends: req.params.friendId } },
     { runValidators: true, new: true },
   )
+  //if the user doesnt exist return an error, otherwise return the updated user document
     .then((user) =>
       !user
         ? res.status(404).json({ message: 'No user with this id!' })
@@ -78,14 +80,7 @@ module.exports = {
     )
     .catch((err) => res.status(500).json(err));
   },
-  //get All FRIENDs
-  /*
-  getFriends(req, res) {
-    User.friends.find()
-      .then((user) => res.json(user))
-      .catch((err) => res.status(500).json(err));
-  },*/
-  //delete A FRIEND
+  //This section removes a friend via delete, based on the id's in the url
   removeFriend(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
