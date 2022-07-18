@@ -35,7 +35,7 @@ module.exports = {
       User.findOneAndDelete({ _id: req.params.userId })      
     )    
     .then((user) =>
-    res.json(user)
+    res.json({ message: 'User and thoughts deleted!' })
     )
     .catch((err) => res.status(500).json(err));
   },
